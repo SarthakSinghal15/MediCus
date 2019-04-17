@@ -1,61 +1,105 @@
 package com.medicus;
-import java.util.ArrayList;
-import java.util.List;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
-class DoctorDashboardActivity extends Activity implements OnItemSelectedListener
-{
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class DoctorDashboardActivity extends AppCompatActivity {
+    private static final String TAG = "SignupActivity";
+
+    @BindView(R.id.txt_doctorName) TextView _dnameText;
+    @BindView(R.id.txt_phoneNo) TextView _dphoneText;
+    @BindView(R.id.txt_hospitalAddr) TextView _daddressText;
+    @BindView(R.id.btn_addPatient) Button _addPButton;
+    @BindView(R.id.btn_viewPatient) Button _viewPButton;
+    @BindView(R.id.btn_approvePatient) Button _approvePButton;
+    @BindView(R.id.btn_addMedicine) Button _addMedicineButton;
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_dashboard);
+        ButterKnife.bind(this);
 
-        // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        _addPButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the registration screen and return to the Login activity
+                Intent intent = new Intent(getApplicationContext(),DoctorAddPatientActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
 
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
+        _addMedicineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the registration screen and return to the Login activity
+                Intent intent = new Intent(getApplicationContext(),DoctorAddPrescriptionActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
 
-        // Spinner Drop down elements
-        List<String> patients = new ArrayList<String>();
-
-        patients.add("Patient 1");
-        patients.add("Patient 2");
-        patients.add("Patient 3");
-        patients.add("Patient 4");
-        patients.add("Patient 5");
-        patients.add("Patient 6");
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, patients);
-
-        // Drop down layout style – list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        _viewPButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the registration screen and return to the Login activity
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-    {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
+    public void signup() {
+        Log.d(TAG, "Signup");
 
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+
+//        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+//                R.style.AppTheme_Dark_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Creating Account...");
+//        progressDialog.show();
+
+//        String name = _nameText.getText().toString();
+//        String address = _addressText.getText().toString();
+//        String email = _emailText.getText().toString();
+//        String mobile = _mobileText.getText().toString();
+//        String password = _passwordText.getText().toString();
+//        String reEnterPassword = _reEnterPasswordText.getText().toString();
+//        String emergencyContact = _emergencyText.getText().toString();
+//        String emergencyContactMobile = _emergencyMobileText.getText().toString();
+
+        // TODO: Implement your own signup logic here.
+
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onSignupSuccess or onSignupFailed
+//                        // depending on success
+//                        //onSignupSuccess();
+//                        // onSignupFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
     }
 
-    public void onNothingSelected(AdapterView<?> arg0)
-    {
-        // TODO Auto-generated method stub
-    }
+
+
+
+
 }

@@ -18,6 +18,12 @@
             android:name=".DoctorDashboardActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
+            android:name=".DoctorAddPatientActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".DoctorAddPrescriptionActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
             android:name=".DoctorSignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
