@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.medicus.PatientDashboardActivity"
+    android:layout_margin="15dp"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/iron"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="210dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/patient_image" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_patientId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="001" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_patientName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Ajinkya Thakare"
+                    tools:text="@tools:sample/full_names" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Emgergency No.:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_emergencyNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="6692309354"
+                    tools:text="@tools:sample/us_phones" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address :"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_patientAddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="899 Morrison Park Dr, San Jose, California, USA" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <Button
+            android:id="@+id/btn_todaySchedule"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="today's Medicines"
+            android:elevation="10dp"/>
+
+        <Button
+            android:id="@+id/btn_weekSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Weekly Schedule"
+            android:elevation="10dp"/>
+
+        <Button
+            android:id="@+id/btn_emergencyCall"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Emergency Call"
+            android:elevation="10dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
