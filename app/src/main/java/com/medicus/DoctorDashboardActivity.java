@@ -11,11 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DoctorDashboardActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+
+    TextView did, dname, daddr, dcontact;
+    UserSessionManager session;
+
 
     @BindView(R.id.txt_doctorName) TextView _dnameText;
     @BindView(R.id.txt_phoneNo) TextView _dphoneText;
@@ -30,6 +36,15 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_dashboard);
         ButterKnife.bind(this);
+
+        session = new UserSessionManager(getApplicationContext());
+
+        did = (TextView) findViewById(R.id.txt_doctorID);
+        dname = (TextView) findViewById(R.id.txt_doctorName);
+        daddr = (TextView) findViewById(R.id.txt_hospitalAddr);
+        dcontact= (TextView) findViewById(R.id.txt_phoneNo);
+
+        loadProfile();
 
         _addPButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +113,15 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 //                }, 3000);
     }
 
+    private void loadProfile()
+    {
+        HashMap<String, String> user = session.getUserDetails();
 
+        did.setText(user.get(UserSessionManager.U_ID));
+        dname.setText(user.get(UserSessionManager.U_NAME));
+        dcontact.setText(user.get(UserSessionManager.U_ECONTACT));
+        daddr.setText(user.get(UserSessionManager.U_ADDR));
+    }
 
 
 

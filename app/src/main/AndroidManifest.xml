@@ -6,39 +6,18 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity android:name=".DoctorViewPatient"
-            android:theme="@style/AppTheme.Dark"></activity>
-        <activity
-            android:name=".PatientWeekSchedule"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".PatientTodaySchedule"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".PatientDashboardActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".DoctorDashboardActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".DoctorAddPatientActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".DoctorAddPrescriptionActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".DoctorSignupActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".DoctorLoginActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".SignupActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Dark" />
+        android:theme="@style/AppTheme.Dark">
+        <activity android:name=".DoctorViewPatient"/>
+        <activity android:name=".PatientWeekSchedule"/>
+        <activity android:name=".PatientTodaySchedule"/>
+        <activity android:name=".PatientDashboardActivity"/>
+        <activity android:name=".DoctorDashboardActivity"/>
+        <activity android:name=".DoctorAddPatientActivity"/>
+        <activity android:name=".DoctorAddPrescriptionActivity"/>
+        <activity android:name=".DoctorSignupActivity"/>
+        <activity android:name=".DoctorLoginActivity"/>
+        <activity android:name=".SignupActivity"/>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

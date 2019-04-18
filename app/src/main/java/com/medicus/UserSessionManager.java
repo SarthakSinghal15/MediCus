@@ -3,6 +3,7 @@ package com.medicus;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -43,8 +44,10 @@ public class UserSessionManager
 
     public boolean checkLogin()
     {
+        Log.i("Session Manager","Inside check login");
         if(!this.isUserLoggedIn())
         {
+            Log.i("Session Manager","User not logged in");
             Intent intent = new Intent(context,LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //close all activities from stack
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add flag to start new activity
@@ -56,6 +59,8 @@ public class UserSessionManager
 
     public boolean isUserLoggedIn()
     {
+        Log.i("Session Manager","in isUserLoggedIn()");
+
         return pref.getBoolean(IS_USER_LOGIN,false);
     }
 
@@ -72,6 +77,13 @@ public class UserSessionManager
 
         return user;
     }
+
+    public String getUserType()
+    {
+        return pref.getString(U_TYPE,null);
+    }
+
+    public String getUserId() { return pref.getString(U_ID,null); }
 
     public void logoutUser()
     {

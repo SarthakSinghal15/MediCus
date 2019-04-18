@@ -17,6 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
+
+    UserSessionManager session;
+
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
@@ -31,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        session = new UserSessionManager(getApplicationContext());
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -86,18 +91,47 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
 
-        if(email.equals("aj@gmail.com")&&password.equals("aaaa")) {
+        if(checkcredentials(email,password)) {
 
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
                             // On complete call either onLoginSuccess or onLoginFailed
                             onLoginSuccess();
-                            // onLoginFailed();
+                            //onLoginFailed();
                             progressDialog.dismiss();
                         }
                     }, 3000);
         }
+        else
+        {
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            onLoginFailed();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }
+    }
+
+    private boolean checkcredentials(String email, String password)
+    {
+        String id = "001";
+        String name = "Ajinkya Thakare";
+        String addr = "899 Morrison Park Dr, San Jose, California, USA";
+        String contact = "6692309354";
+        String emergency = "6692309354";
+        String type = "Patient";
+
+        if(email.equals("aj@gmail.com")&&password.equals("aaaa"))
+        {
+            session.createUserLoginSession(id,name,addr,contact,emergency,type);
+            return true;
+        }
+
+        return false;
     }
 
 
