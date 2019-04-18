@@ -21,43 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         session = new UserSessionManager(getApplicationContext());
 
-<<<<<<< Updated upstream
-//        new android.os.Handler().postDelayed(
-//                new Runnable() {
-//                    public void run() {
-//                        if(!session.isUserLoggedIn()) {
-//                            //navigate to login activity
-//
-//                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                            //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                        else {
-//                            //HashMap<String, String> user = session.getUserDetails();
-//
-//                            //String userType = session.getUserType();
-//
-//                            if (session.getUserType().equals("Doctor")) {
-//                                //navigate to doctor dashboard
-//
-//                                Intent intent = new Intent(MainActivity.this, DoctorDashboardActivity.class);
-//                                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                                startActivity(intent);
-//                                finish();
-//                            } else {
-//                                //navigate to patient dashboard
-//
-//                                Intent intent = new Intent(MainActivity.this, PatientDashboardActivity.class);
-//                                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                                startActivity(intent);
-//                                finish();
-//                            }
-//                        }
-//                    }
-//                }, 3000);
-=======
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -73,10 +36,27 @@ public class MainActivity extends AppCompatActivity {
                             //HashMap<String, String> user = session.getUserDetails();
 
                             //String userType = session.getUserType();
->>>>>>> Stashed changes
 
+                            if (session.getUserType().equals("Doctor")) {
+                                //navigate to doctor dashboard
 
+                                Intent intent = new Intent(MainActivity.this, DoctorDashboardActivity.class);
+                                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                //navigate to patient dashboard
 
+                                Intent intent = new Intent(MainActivity.this, PatientDashboardActivity.class);
+                                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+                }, 3000);
+
+        /*
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -86,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 }, 3000);
+        */
 
     }
 
