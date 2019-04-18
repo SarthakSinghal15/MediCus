@@ -3,10 +3,12 @@ package com.medicus;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +23,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
@@ -31,6 +41,8 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
     UserSessionManager session;
     private static SQLiteHelper sqLiteHelper;
+    FirebaseFirestore db;
+    ProgressDialog progressDialog;
 
     Button todaySchedule, weekSchedule, emergencyCall, syncPrescriptions;
     TextView pid, pname, paddr, pemergency;
@@ -47,6 +59,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
         session = new UserSessionManager(getApplicationContext());
         sqLiteHelper = new SQLiteHelper(getApplicationContext(),"UserDB.sqlite",null,1);
+        db = FirebaseFirestore.getInstance();
 
         todaySchedule = (Button) findViewById(R.id.btn_todaySchedule);
         weekSchedule = (Button) findViewById(R.id.btn_weekSchedule);
@@ -57,6 +70,11 @@ public class PatientDashboardActivity extends AppCompatActivity {
         pname = (TextView) findViewById(R.id.txt_patientName);
         paddr = (TextView) findViewById(R.id.txt_patientAddr);
         pemergency = (TextView) findViewById(R.id.txt_emergencyNo);
+
+        progressDialog = new ProgressDialog(PatientDashboardActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Syncing Prescriptions...");
 
         checkTable();
         loadProfile();
@@ -91,6 +109,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 syncAllPrescriptions();
+                //localtoSetAlarm();
             }
         });
     }
@@ -227,31 +246,86 @@ public class PatientDashboardActivity extends AppCompatActivity {
         // clear local db
         sqLiteHelper.deleteData();
 
-        // fetch all prescs from firestore for current user id
-
+        // fetch all prescs from firestore for current user id and load into local db
+        firestoreToLocal();
 
         // load local db with new prescs data
-        int uid = Integer.parseInt(session.getUserId());
-        sqLiteHelper.insertPrescriptionData(uid,001,5,"3",6,8,"Crocine");
-        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,5,"Paracetamol");
-        sqLiteHelper.insertPrescriptionData(uid,001,4,"3",5,3,"B-Capsule");
-        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,50,"Combiflame");
-        sqLiteHelper.insertPrescriptionData(uid,001,3,"3",5,5,"Oncet-CF");
-        sqLiteHelper.insertPrescriptionData(uid,001,1,"3",5,7,"Crocine");
+//
+//        int uid = Integer.parseInt(session.getUserId());
+//        sqLiteHelper.insertPrescriptionData(uid,001,5,"3",6,8,"Crocine");
+//        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,5,"Paracetamol");
+//        sqLiteHelper.insertPrescriptionData(uid,001,4,"3",5,3,"B-Capsule");
+//        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,50,"Combiflame");
+//        sqLiteHelper.insertPrescriptionData(uid,001,3,"3",5,5,"Oncet-CF");
+//        sqLiteHelper.insertPrescriptionData(uid,001,1,"3",5,7,"Crocine");
+
+        Log.i("Alarm ","Reached below firestore to local");
+//
+//        // set new alarms with new prescs data
+//        String userName = session.getUserName();
+//        String sql = "SELECT presId,medname,hour,minute,day FROM PRESCRIPTION";
+//        Cursor c = sqLiteHelper.getData(sql);
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.i("to Set Alarm", "Setting Alarm");
+//                setAlarm(c.getInt(0), userName, c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4));
+//            }
+//            while (c.moveToNext());
+//        }
+
+    }
+
+    private void firestoreToLocal()
+    {
+        progressDialog.show();
+        final int uid = Integer.parseInt(session.getUserId());
+        CollectionReference ref = db.collection("Prescriptions");
+        Query prescdata = ref.whereEqualTo("pid",uid);
+        Task<QuerySnapshot> querySnapshotTask = prescdata.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+
+                    for(QueryDocumentSnapshot doc :  task.getResult())
+                    {
+                        int docid= Integer.parseInt(doc.get("did").toString());
+                        int day = Integer.parseInt(doc.get("day").toString());
+                        String duration = doc.get("Duration").toString();
+                        int hour=Integer.parseInt(doc.get("hour").toString());
+                        int minute=Integer.parseInt(doc.get("minute").toString());
+                        String medname = doc.get("medicine name").toString();
+
+                        Log.i("Alarm Firestre to loc","uid: "+uid+" med: "+medname+" day: "+day+" hour: "+hour+" min: "+minute);
+
+                        sqLiteHelper.insertPrescriptionData(uid,docid,day,duration,hour,minute,medname);
+                        new Handler().postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                    }
+                                }, 3000);
+                    }
+                    localtoSetAlarm();
+                }
+            }
+        });
+    }
 
 
-        // set new alarms with new prescs data
+
+    private void localtoSetAlarm()
+    {
         String userName = session.getUserName();
         String sql = "SELECT presId,medname,hour,minute,day FROM PRESCRIPTION";
         Cursor c = sqLiteHelper.getData(sql);
-        if(c.moveToFirst())
-        {
+        if (c.moveToFirst()) {
             do {
-                setAlarm(c.getInt(0),userName,c.getString(1),c.getInt(2),c.getInt(3),c.getInt(4));
+                Log.i("to Set Alarm", "Setting Alarm");
+                setAlarm(c.getInt(0), userName, c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4));
             }
             while (c.moveToNext());
         }
-
     }
 
     private void checkTable(){
