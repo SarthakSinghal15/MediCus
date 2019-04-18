@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "586395838519",
+    "firebase_url": "https://cmpe277-82ecc.firebaseio.com",
+    "project_id": "cmpe277-82ecc",
+    "storage_bucket": "cmpe277-82ecc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586395838519:android:3fc50a43456d8157",
+        "android_client_info": {
+          "package_name": "com.example.medicus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586395838519-vsosp6q80atp2hse76opui32mjvkud7u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medicus",
+            "certificate_hash": "df732e0766088e4d60fc233ab98090b7bf709d5d"
+          }
+        },
+        {
+          "client_id": "586395838519-qtfokr9sbsgpa2458u2luisk2cm7prko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medicus",
+            "certificate_hash": "875c0f4233846669bea717d6d7144b7d14088d09"
+          }
+        },
+        {
+          "client_id": "586395838519-gjgmqss1t96a5g6g7mnur7ti5udp4m57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSoEkLTh5IPqyM91krgO9yp_7NH-l2B_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586395838519-gjgmqss1t96a5g6g7mnur7ti5udp4m57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586395838519:android:a6ef4ce035ac9b9c",
+        "android_client_info": {
+          "package_name": "com.medicus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586395838519-2s1a3ci8j5a984s3tf1nc3n0vgdsjmsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicus",
+            "certificate_hash": "df732e0766088e4d60fc233ab98090b7bf709d5d"
+          }
+        },
+        {
+          "client_id": "586395838519-gjgmqss1t96a5g6g7mnur7ti5udp4m57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSoEkLTh5IPqyM91krgO9yp_7NH-l2B_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586395838519-gjgmqss1t96a5g6g7mnur7ti5udp4m57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
