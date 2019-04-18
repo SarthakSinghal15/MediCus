@@ -102,7 +102,7 @@ public class DoctorLoginActivity extends AppCompatActivity {
         // TODO: Implement your own authentication logic here.
         Log.i("resulttag",email+"  " +password);
         CollectionReference ref= db.collection("Doctors");
-        Query PatientData = ref.whereEqualTo("username", email).whereEqualTo("password",password);
+        Query PatientData = ref.whereEqualTo("Username", email).whereEqualTo("Password",password);
         Task<QuerySnapshot> querySnapshotTask = PatientData.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
