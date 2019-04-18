@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.HashMap;
 
@@ -28,7 +31,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     @BindView(R.id.txt_hospitalAddr) TextView _daddressText;
     @BindView(R.id.btn_addPatient) Button _addPButton;
     @BindView(R.id.btn_viewPatient) Button _viewPButton;
-    @BindView(R.id.btn_approvePatient) Button _approvePButton;
+    //@BindView(R.id.btn_approvePatient) Button _approvePButton;
     @BindView(R.id.btn_addMedicine) Button _addMedicineButton;
 
     @Override
@@ -36,6 +39,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_dashboard);
         ButterKnife.bind(this);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         session = new UserSessionManager(getApplicationContext());
 
@@ -78,6 +83,30 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            session.logoutUser();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void signup() {
