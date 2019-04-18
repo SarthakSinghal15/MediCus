@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class PatientDashboardActivity extends AppCompatActivity {
@@ -74,6 +75,8 @@ public class PatientDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // code to call emergency contact
+                setAlarm(1234,"Ajinkya Thakare","Paracetamol",0,38,4);
+                //clearAlarm(1234);
             }
         });
     }
@@ -103,33 +106,8 @@ public class PatientDashboardActivity extends AppCompatActivity {
     }
 
     private void getPermissions() {
-        /*
-        int smsPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-        int phoneStatePermissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE);
-
-        if(smsPermissionCheck == PackageManager.PERMISSION_GRANTED)
-        {
-            Log.i("Message Permission","Permission granted");
-        }
-        else
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},0);
-        }
-
-        if(phoneStatePermissionCheck == PackageManager.PERMISSION_GRANTED)
-        {
-            Log.i("Read Phone State","Permission granted");
-        }
-        else
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
-        }
-        */
-
         String[] permissions = {Manifest.permission.SEND_SMS,Manifest.permission.READ_PHONE_STATE};
-
         ActivityCompat.requestPermissions(this,permissions,0);
-
     }
 
     @Override
@@ -169,44 +147,51 @@ public class PatientDashboardActivity extends AppCompatActivity {
         Log.i("load profile","loaded profile");
     }
 
-    private void setAlarm(long timeInMillis) {
+    private void setAlarm(int prescNo, String name, String medicine, int hour, int minute, int day) {
 
         //Log.i("main activity","setting alarm");
+
+        String firstName = name.split("\\s+")[0];
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY,hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.DAY_OF_WEEK,day);
+
+        Log.i("Alarm set", "Set for "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+" on day "+cal.get(Calendar.DAY_OF_WEEK));
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, MyAlarm.class);
-        intent.putExtra("name",name);
+        intent.putExtra("name",firstName);
         intent.putExtra("medicine",medicine);
-        intent.putExtra("reqno",piReqNo);
+        intent.putExtra("reqno",prescNo);
+        intent.putExtra("hour",hour);
+        intent.putExtra("minute",minute);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, piReqNo, intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, prescNo, intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis,AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7, pendingIntent);
         //alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
 
-        Toast.makeText(this, "Alarm is set "+piReqNo,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Alarm is set "+prescNo,Toast.LENGTH_SHORT).show();
 
-        Log.i("Alarm Set", "Name: "+ name + ", Medicine: "+ medicine + ", Request No.: "+piReqNo);
+        Log.i("Alarm Set", "Name: "+ name + ", Medicine: "+ medicine + ", Request No.: "+prescNo);
 
-        piReqNo++;
     }
 
-    private void clearAlarms()
+    private void clearAlarm( int prescNo)
     {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, MyAlarm.class);
 
-        for(int i=0;i<piReqNo;i++)
-        {
-            Log.i("Clear Alarm", "Clear alarm "+i);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent,PendingIntent.FLAG_CANCEL_CURRENT);
-            alarmManager.cancel(pendingIntent);
-        }
+        Log.i("Clear Alarm", "Clear alarm "+prescNo);
 
-        Toast.makeText(this, "Cleared all alarms",Toast.LENGTH_SHORT).show();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, prescNo, intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
 
-        piReqNo = 0;
+        //Toast.makeText(this, "Cleared all alarms",Toast.LENGTH_SHORT).show();
+
     }
 }

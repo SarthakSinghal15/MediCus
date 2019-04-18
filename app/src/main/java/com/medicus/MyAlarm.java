@@ -114,6 +114,9 @@ public class MyAlarm extends BroadcastReceiver {
         String name = intent.getStringExtra("name");
         String medicine = intent.getStringExtra("medicine");
         int reqno = intent.getIntExtra("reqno",0);
+        int hour = intent.getIntExtra("hour",0);
+        int minute = intent.getIntExtra("minute",0);
+
 
         notificationManager = NotificationManagerCompat.from(context);
 
@@ -146,6 +149,8 @@ public class MyAlarm extends BroadcastReceiver {
         String name = intent.getStringExtra("name");
         String medicine = intent.getStringExtra("medicine");
         int reqno = intent.getIntExtra("reqno",0);
+        int hour = intent.getIntExtra("hour",0);
+        int minute = intent.getIntExtra("minute",0);
 
         notificationManager = NotificationManagerCompat.from(context);
 
@@ -155,7 +160,7 @@ public class MyAlarm extends BroadcastReceiver {
 
         Log.i("Alarm Ring Missed", "Name: "+ name + ", Medicine: "+ medicine + ", Request No.: "+ reqno);
 
-        String message = name + " has missed to take " + medicine + " medicine";
+        String message = name + " missed to take " + medicine + " medicine at "+ hour+":"+minute;
 
         Notification notification = new NotificationCompat.Builder(context,channel_id)
                 .setSmallIcon(R.drawable.ic_notify)
@@ -179,8 +184,10 @@ public class MyAlarm extends BroadcastReceiver {
         Log.i("Alarm Alert SMS","Sending alert sms");
         String name = intent.getStringExtra("name");
         String medicine = intent.getStringExtra("medicine");
+        int hour = intent.getIntExtra("hour",0);
+        int minute = intent.getIntExtra("minute",0);
 
-        String message = name + " has forgot to take " + medicine + " medicine scheduled at <some time>, kindly remind them.";
+        String message = name + " has forgot to take " + medicine + " medicine scheduled at "+hour+":"+minute+", kindly remind them.";
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phonenumber,null,message,null,null);
