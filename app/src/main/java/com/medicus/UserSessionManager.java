@@ -12,6 +12,7 @@ public class UserSessionManager
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context context;
+    static int userid;
     int PRIVATE_MODE = 0;
     public static final String PREFER_NAME = "MedicusPref";
     public static final String IS_USER_LOGIN = "IsUserLoggedIn";
@@ -62,7 +63,6 @@ public class UserSessionManager
     public boolean isUserLoggedIn()
     {
         Log.i("Session Manager","in isUserLoggedIn()");
-
         return pref.getBoolean(IS_USER_LOGIN,false);
     }
 
@@ -77,7 +77,7 @@ public class UserSessionManager
         user.put(U_ECONTACT,pref.getString(U_ECONTACT,null));
         user.put(U_TYPE,pref.getString(U_TYPE,null));
         user.put(U_EMAIL,pref.getString(U_EMAIL,null));
-
+        userid = Integer.parseInt(pref.getString(U_ID,null));
         return user;
     }
 

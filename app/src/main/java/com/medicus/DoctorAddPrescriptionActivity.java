@@ -41,6 +41,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
     @BindView(R.id.timePicker) TimePicker _tp;
     public static SQLiteHelper sqLiteHelper;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //UserSessionManager obj = new UserSessionManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +53,24 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                DataInteraction();
+                PutDatatoFirestore();
                 login();
             }
         });
     }
 
-    private void DataInteraction() {
+    private void PutDatatoFirestore() {
         if (!validate()) {
             onPrescibeFailed();
             return;
         }
         _addButton.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(DoctorAddPrescriptionActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Adding Prescription...");
-        progressDialog.show();
         int pid = Integer.parseInt(_patientId.getText().toString());
-        int did = 100;
+        int did = UserSessionManager.userid;
         String medicineName = _medicineName.getText().toString();
         String duration = _duration.getText().toString();
         int hour = _tp.getHour();
         int minute = _tp.getMinute();
-        Log.d("*****DATA****", "In adding data in firestore");
         Map<String, Object> data=  new HashMap<>();
         data.put("pid", pid);
         data.put("did", did);
@@ -84,12 +78,70 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
         data.put("Duration", duration);
         data.put("hour", hour);
         data.put("minute", minute);
-        db.collection("Prescriptions").document("aa").set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("***********LOGS*****","data has been saved");
-            }
-        });
+        if(_mondayCheck.isChecked()){
+            data.put("day", 1);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+
+        }
+        if(_tuesdayCheck.isChecked()){
+            data.put("day", 2);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_weddayCheck.isChecked()){
+            data.put("day", 3);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_thursdayCheck.isChecked()){
+            data.put("day", 4);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_fridayCheck.isChecked()){
+            data.put("day", 5);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_satdayCheck.isChecked()){
+            data.put("day", 6);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_sundayCheck.isChecked()) {
+            data.put("day", 7);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****", "data has been saved");
+                }
+            });
+        }
 
     }
 
@@ -112,7 +164,8 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
         progressDialog.show();
 
         int pid = Integer.parseInt(_patientId.getText().toString());
-        int did = 100;
+
+        int did=UserSessionManager.userid;
         String medicineName = _medicineName.getText().toString();
         String duration = _duration.getText().toString();
         int hour = _tp.getHour();

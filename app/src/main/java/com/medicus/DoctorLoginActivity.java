@@ -3,6 +3,8 @@ package com.medicus;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -13,13 +15,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DoctorLoginActivity extends AppCompatActivity {
 
     UserSessionManager session;
-
+    FirebaseFirestore db=FirebaseFirestore.getInstance();
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
@@ -86,37 +96,72 @@ public class DoctorLoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
+        final String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
         Log.i("resulttag",email+"  " +password);
+        CollectionReference ref= db.collection("Doctors");
+        Query PatientData = ref.whereEqualTo("username", email).whereEqualTo("password",password);
+        Task<QuerySnapshot> querySnapshotTask = PatientData.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        String id = doc.get("did").toString();
+                        String name = doc.get("firstname").toString();
+                        String addr = doc.get("Address").toString();
+                        String contact = doc.get("Phone").toString();
+                        String emergency = doc.get("Emergency").toString();
+                        String type = "Doctor";
+                        session.createUserLoginSession(id, name, addr, contact, emergency, type, email);
+                        new Handler().postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        // On complete call either onLoginSuccess or onLoginFailed
+                                        onLoginSuccess();
+                                        //onLoginFailed();
+                                        progressDialog.dismiss();
+                                    }
+                                }, 3000);
+                    }
+                } else {
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    // On complete call either onLoginSuccess or onLoginFailed
+                                    onLoginFailed();
+                                    progressDialog.dismiss();
+                                }
+                            }, 3000);
 
-        if(checkcredentials(email,password))
-        {
-            Log.i("resulttag11","they are being verified as well");
-
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            // On complete call either onLoginSuccess or onLoginFailed
-                            onLoginSuccess();
-                            //onLoginFailed();
-                            progressDialog.dismiss();
-                        }
-                    }, 3000);
-        }
-        else
-        {
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            // On complete call either onLoginSuccess or onLoginFailed
-                            onLoginFailed();
-                            progressDialog.dismiss();
-                        }
-                    }, 3000);
-        }
+                }
+            }
+        });
+//        if(checkcredentials(email,password))
+//        {
+//            Log.i("resulttag11","they are being verified as well");
+//
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            // On complete call either onLoginSuccess or onLoginFailed
+//                            onLoginSuccess();
+//                            //onLoginFailed();
+//                            progressDialog.dismiss();
+//                        }
+//                    }, 3000);
+//        }
+//        else
+//        {
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            // On complete call either onLoginSuccess or onLoginFailed
+//                            onLoginFailed();
+//                            progressDialog.dismiss();
+//                        }
+//                    }, 3000);
+//        }
 
     }
 

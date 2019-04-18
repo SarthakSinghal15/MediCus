@@ -106,11 +106,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        String id = "001";
-                        String name = "Ajinkya Thakare";
-                        String addr = "899 Morrison Park Dr, San Jose, California, USA";
-                        String contact = "6692309354";
-                        String emergency = "6692309354";
+                        String id = doc.get("pid").toString();
+                        String name = doc.get("firstname").toString();
+                        String addr = doc.get("Address").toString();
+                        String contact = doc.get("Phone").toString();
+                        String emergency = doc.get("Emergency").toString();
                         String type = "Patient";
                         session.createUserLoginSession(id, name, addr, contact, emergency, type, email);
                         new Handler().postDelayed(
