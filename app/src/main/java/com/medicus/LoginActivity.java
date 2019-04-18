@@ -127,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if(email.equals("aj@gmail.com")&&password.equals("aaaa"))
         {
-            session.createUserLoginSession(id,name,addr,contact,emergency,type);
+            session.createUserLoginSession(id,name,addr,contact,emergency,type,email);
+            Log.i("check creds", "session created");
             return true;
         }
 

@@ -20,6 +20,7 @@ public class UserSessionManager
     public static final String U_ADDR = "address";
     public static final String U_CONTACT = "contact";
     public static final String U_ID = "id";
+    public static final String U_EMAIL = "email";
     public static final String U_ECONTACT = "emergency";
     public static final String U_TYPE = "type";
 
@@ -30,7 +31,7 @@ public class UserSessionManager
         editor = pref.edit();
     }
 
-    public void createUserLoginSession(String id, String name, String addr, String contact, String emergency,String type)
+    public void createUserLoginSession(String id, String name, String addr, String contact, String emergency,String type,String email)
     {
         editor.putBoolean(IS_USER_LOGIN,true);
         editor.putString(U_ID,id);
@@ -39,6 +40,7 @@ public class UserSessionManager
         editor.putString(U_CONTACT,contact);
         editor.putString(U_ECONTACT,emergency);
         editor.putString(U_TYPE,type);
+        editor.putString(U_EMAIL,email);
         editor.commit();
     }
 
@@ -74,6 +76,7 @@ public class UserSessionManager
         user.put(U_CONTACT,pref.getString(U_CONTACT,null));
         user.put(U_ECONTACT,pref.getString(U_ECONTACT,null));
         user.put(U_TYPE,pref.getString(U_TYPE,null));
+        user.put(U_EMAIL,pref.getString(U_EMAIL,null));
 
         return user;
     }

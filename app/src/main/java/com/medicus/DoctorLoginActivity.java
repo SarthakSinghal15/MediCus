@@ -130,7 +130,7 @@ public class DoctorLoginActivity extends AppCompatActivity {
         String type = "Doctor";
         if(email.equals("sarthak@gmail.com")&&password.equals("aaaa"))
         {
-            session.createUserLoginSession(id,name,addr,contact,emergency,type);
+            session.createUserLoginSession(id,name,addr,contact,emergency,type,email);
             return true;
         }
 
