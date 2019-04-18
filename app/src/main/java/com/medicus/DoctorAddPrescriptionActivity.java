@@ -75,32 +75,32 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
         int minute = _tp.getMinute();
 
         sqLiteHelper = new SQLiteHelper(getApplicationContext(),"UserDB.sqlite",null,1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS PRESCRIPTION(presId INTEGER PRIMARY KEY AUTOINCREMENT, patientID INTEGER,doctorID INTEGER, day VARCHAR,duration VARCHAR,hour INTEGER,minute INTEGER,medname VARCHAR)");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS PRESCRIPTION(presId INTEGER PRIMARY KEY AUTOINCREMENT, patientID INTEGER,doctorID INTEGER, day INTEGER,duration VARCHAR,hour INTEGER,minute INTEGER,medname VARCHAR)");
 
         Log.i("Result","atleast database is being created");
         if(_mondayCheck.isChecked()){
             Log.i("Result","atleast monday is working");
-            sqLiteHelper.insertPrescriptionData(pid,did,"Monday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,1,duration,hour,minute,medicineName);
             Log.i("Result","atleast monday is working");
 
         }
         if(_tuesdayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Tuesday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,2,duration,hour,minute,medicineName);
         }
         if(_weddayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Wednesday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,3,duration,hour,minute,medicineName);
         }
         if(_thursdayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Thursday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,4,duration,hour,minute,medicineName);
         }
         if(_fridayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Friday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,5,duration,hour,minute,medicineName);
         }
         if(_satdayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Saturday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,6,duration,hour,minute,medicineName);
         }
         if(_sundayCheck.isChecked()){
-            sqLiteHelper.insertPrescriptionData(pid,did,"Sunday",duration,hour,minute,medicineName);
+            sqLiteHelper.insertPrescriptionData(pid,did,7,duration,hour,minute,medicineName);
         }
 
 
@@ -121,7 +121,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
     }
 
     public void onPrescibeFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Couldn't add the prescription", Toast.LENGTH_LONG).show();
 
         _addButton.setEnabled(true);
     }

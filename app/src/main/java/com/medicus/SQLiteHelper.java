@@ -32,7 +32,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.executeInsert();
     }
 
-    public void insertPrescriptionData(int patientID, int doctorID, String day, String duration, int hour, int minute, String medname){
+    public void insertPrescriptionData(int patientID, int doctorID, int day, String duration, int hour, int minute, String medname){
         Log.i("Result","atleast query is about to be executed");
         SQLiteDatabase database = getWritableDatabase();
         Log.i("Result","1");
@@ -44,7 +44,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Log.i("Result","4");
         statement.bindLong(1,patientID);
         statement.bindLong(2,doctorID);
-        statement.bindString(3, day);
+        statement.bindLong(3,day);
         statement.bindString(4, duration);
         statement.bindLong(5,hour);
         statement.bindLong(6,minute);
