@@ -26,6 +26,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     UserSessionManager session;
 
 
+
     @BindView(R.id.txt_doctorName) TextView _dnameText;
     @BindView(R.id.txt_phoneNo) TextView _dphoneText;
     @BindView(R.id.txt_hospitalAddr) TextView _daddressText;
