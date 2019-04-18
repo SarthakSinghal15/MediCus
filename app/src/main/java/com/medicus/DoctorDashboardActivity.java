@@ -37,7 +37,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 // Finish the registration screen and return to the Login activity
                 Intent intent = new Intent(getApplicationContext(),DoctorAddPatientActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -48,7 +48,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 // Finish the registration screen and return to the Login activity
                 Intent intent = new Intent(getApplicationContext(),DoctorAddPrescriptionActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -57,9 +57,9 @@ public class DoctorDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DoctorViewPatient.class);
                 startActivity(intent);
-                finish();
+                //finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });

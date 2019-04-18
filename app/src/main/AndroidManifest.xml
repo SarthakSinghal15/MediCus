@@ -7,10 +7,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".PatientWeekSchedule"
+        <activity android:name=".DoctorViewPatient"
+            android:theme="@style/AppTheme.Dark"></activity>
+        <activity
+            android:name=".PatientWeekSchedule"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".PatientTodaySchedule"
-            android:theme="@style/AppTheme.Dark"  />
+        <activity
+            android:name=".PatientTodaySchedule"
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".PatientDashboardActivity"
             android:theme="@style/AppTheme.Dark" />

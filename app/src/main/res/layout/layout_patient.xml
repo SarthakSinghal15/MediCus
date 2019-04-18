@@ -62,7 +62,7 @@
                     android:paddingTop="3dp"
                     android:paddingBottom="3dp"/>
                 <TextView
-                    android:text="899, Morrison Park Drive, San Jose, CA, USA"
+                    android:text="899, Morrison Park Drive, San Jose, CA, USA 899, Morrison Park Drive, San Jose, CA, USA"
                     android:id="@+id/txt_patAddr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
