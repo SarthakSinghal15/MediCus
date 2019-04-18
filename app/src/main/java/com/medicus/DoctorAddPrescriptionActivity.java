@@ -79,7 +79,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
         data.put("hour", hour);
         data.put("minute", minute);
         if(_mondayCheck.isChecked()){
-            data.put("day", 1);
+            data.put("day", 2);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -89,15 +89,6 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
 
         }
         if(_tuesdayCheck.isChecked()){
-            data.put("day", 2);
-            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d("***********LOGS*****","data has been saved");
-                }
-            });
-        }
-        if(_weddayCheck.isChecked()){
             data.put("day", 3);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -106,7 +97,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
                 }
             });
         }
-        if(_thursdayCheck.isChecked()){
+        if(_weddayCheck.isChecked()){
             data.put("day", 4);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -115,7 +106,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
                 }
             });
         }
-        if(_fridayCheck.isChecked()){
+        if(_thursdayCheck.isChecked()){
             data.put("day", 5);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -124,7 +115,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
                 }
             });
         }
-        if(_satdayCheck.isChecked()){
+        if(_fridayCheck.isChecked()){
             data.put("day", 6);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -133,8 +124,17 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
                 }
             });
         }
-        if(_sundayCheck.isChecked()) {
+        if(_satdayCheck.isChecked()){
             data.put("day", 7);
+            db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("***********LOGS*****","data has been saved");
+                }
+            });
+        }
+        if(_sundayCheck.isChecked()) {
+            data.put("day", 1);
             db.collection("Prescriptions").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
