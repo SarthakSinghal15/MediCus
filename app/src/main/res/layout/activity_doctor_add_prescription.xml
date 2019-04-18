@@ -54,7 +54,7 @@
             <EditText android:id="@+id/input_patient_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text|number"
+                android:inputType="number"
                 android:hint="Patient ID" />
         </android.support.design.widget.TextInputLayout>
 
@@ -78,7 +78,7 @@
             <EditText android:id="@+id/input_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text|number"
+                android:inputType="number"
                 android:hint="For How Many Days?" />
         </android.support.design.widget.TextInputLayout>
 
