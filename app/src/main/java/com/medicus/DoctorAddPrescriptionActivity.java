@@ -15,6 +15,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,6 +40,7 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
     @BindView(R.id.btn_addPre) Button _addButton;
     @BindView(R.id.timePicker) TimePicker _tp;
     public static SQLiteHelper sqLiteHelper;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +52,45 @@ public class DoctorAddPrescriptionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                DataInteraction();
                 login();
             }
         });
+    }
+
+    private void DataInteraction() {
+        if (!validate()) {
+            onPrescibeFailed();
+            return;
+        }
+        _addButton.setEnabled(false);
+
+        final ProgressDialog progressDialog = new ProgressDialog(DoctorAddPrescriptionActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Adding Prescription...");
+        progressDialog.show();
+        int pid = Integer.parseInt(_patientId.getText().toString());
+        int did = 100;
+        String medicineName = _medicineName.getText().toString();
+        String duration = _duration.getText().toString();
+        int hour = _tp.getHour();
+        int minute = _tp.getMinute();
+        Log.d("*****DATA****", "In adding data in firestore");
+        Map<String, Object> data=  new HashMap<>();
+        data.put("pid", pid);
+        data.put("did", did);
+        data.put("medicine name", medicineName);
+        data.put("Duration", duration);
+        data.put("hour", hour);
+        data.put("minute", minute);
+        db.collection("Prescriptions").document("aa").set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("***********LOGS*****","data has been saved");
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
