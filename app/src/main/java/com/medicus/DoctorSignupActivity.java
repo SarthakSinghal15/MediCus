@@ -11,12 +11,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DoctorSignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @BindView(R.id.dinput_name) EditText _nameText;
     @BindView(R.id.dclinic_input_name) EditText _clinicNameText;
     @BindView(R.id.dinput_address) EditText _addressText;
@@ -76,6 +82,22 @@ public class DoctorSignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
+        int did= (int)(Math.random()*200+100);
+        Map<String, Object> data=  new HashMap<>();
+        data.put("did", did);
+        data.put("Clinic-name",clinic_name);
+        data.put("firstname", name);
+        data.put("Address", address);
+        data.put("Username", email);
+        data.put("Password", password);
+        data.put("Phone", mobile);
+        data.put("Emergency", mobile);
+        db.collection("Doctors").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("***********LOGS*****","data has been saved");
+            }
+        });
         // TODO: Implement your own signup logic here.
 
         new android.os.Handler().postDelayed(
