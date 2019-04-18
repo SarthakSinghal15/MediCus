@@ -83,7 +83,7 @@
             <EditText android:id="@+id/emergency_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="textPersonName"
                 android:hint="Emergency Contact Name" />
         </android.support.design.widget.TextInputLayout>
 
