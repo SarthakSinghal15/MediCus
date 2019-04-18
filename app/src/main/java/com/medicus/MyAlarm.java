@@ -176,18 +176,19 @@ public class MyAlarm extends BroadcastReceiver {
 
         notificationManager.notify(reqno,notification);
 
-        sendAlertMessage(intent,"6692309354");
+        sendAlertMessage(intent);
     }
 
-    private void sendAlertMessage(Intent intent,String phonenumber)
+    private void sendAlertMessage(Intent intent)
     {
         Log.i("Alarm Alert SMS","Sending alert sms");
         String name = intent.getStringExtra("name");
         String medicine = intent.getStringExtra("medicine");
         int hour = intent.getIntExtra("hour",0);
         int minute = intent.getIntExtra("minute",0);
+        String phonenumber = intent.getStringExtra("econtact");
 
-        String message = name + " has forgot to take " + medicine + " medicine scheduled at "+hour+":"+minute+", kindly remind them.";
+        String message = "Seems like "+name + " has forgotten to take " + medicine + " medicine scheduled at "+hour+":"+minute+", kindly remind him/her to take the same.";
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phonenumber,null,message,null,null);

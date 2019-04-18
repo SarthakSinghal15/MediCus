@@ -31,4 +31,5 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-firestore:16.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
 }

@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         String name = "Ajinkya Thakare";
         String addr = "899 Morrison Park Dr, San Jose, California, USA";
         String contact = "6692309354";
-        String emergency = "6692309354";
+        String emergency = "6692438065";
         String type = "Patient";
 
         if(email.equals("aj@gmail.com")&&password.equals("aaaa"))

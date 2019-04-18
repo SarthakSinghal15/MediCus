@@ -116,23 +116,35 @@
         <Button
             android:id="@+id/btn_todaySchedule"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:text="today's Medicines"
             android:elevation="10dp"/>
 
         <Button
             android:id="@+id/btn_weekSchedule"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:text="Weekly Schedule"
             android:elevation="10dp"/>
 
         <Button
             android:id="@+id/btn_emergencyCall"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:text="Emergency Call"
             android:elevation="10dp"/>
+
+        <Button
+            android:id="@+id/btn_syncmeds"
+            android:text="Sync Prescriptions"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:elevation="10dp"/>
+
+        <TextView
+            android:text="Sync your prescriptions to get regular reminders."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

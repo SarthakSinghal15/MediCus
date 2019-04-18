@@ -88,6 +88,10 @@ public class UserSessionManager
 
     public String getUserId() { return pref.getString(U_ID,null); }
 
+    public String getUserName() {return pref.getString(U_NAME,null);}
+
+    public String getEmergency() {return pref.getString(U_ECONTACT,null);}
+
     public void logoutUser()
     {
         editor.clear();

@@ -35,8 +35,8 @@ public class PatientTodaySchedule extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         sqLiteHelper = new SQLiteHelper(getApplicationContext(),"UserDB.sqlite",null,1);
-        Log.i("resultforcursor","executed ddfdf");
-        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day;
+        Log.i("get Todays Meds","Day: "+day);
+        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day+" ORDER BY hour,minute";
         Cursor c = sqLiteHelper.getData(sql);
         Log.i("resultforcursor","executed" + c.getCount());
         if(c.moveToFirst())
