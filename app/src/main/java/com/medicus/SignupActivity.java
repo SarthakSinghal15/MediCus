@@ -85,7 +85,7 @@ public class SignupActivity extends AppCompatActivity {
         String emergencyContact = _emergencyText.getText().toString();
         String emergencyContactMobile = _emergencyMobileText.getText().toString();
 
-        int pid= (int)(Math.random()*50+1);
+        int pid= (int)(Math.random()*1000+1);
         Map<String, Object> data=  new HashMap<>();
         data.put("pid", pid);
         data.put("firstname", name);

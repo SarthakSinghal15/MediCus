@@ -82,7 +82,7 @@ public class DoctorSignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        int did= (int)(Math.random()*200+100);
+        int did= (int)(Math.random()*2000+1000);
         Map<String, Object> data=  new HashMap<>();
         data.put("did", did);
         data.put("Clinic-name",clinic_name);
