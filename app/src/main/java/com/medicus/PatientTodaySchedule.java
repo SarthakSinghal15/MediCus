@@ -15,6 +15,7 @@ public class PatientTodaySchedule extends AppCompatActivity {
     private ArrayList<String> medNames,medTimes;
     RecyclerView recyclerView;
     public static SQLiteHelper sqLiteHelper;
+    UserSessionManager session;
 
 
     @Override
@@ -25,6 +26,8 @@ public class PatientTodaySchedule extends AppCompatActivity {
         medNames = new ArrayList<>();
         medTimes = new ArrayList<>();
 
+        session = new UserSessionManager(getApplicationContext());
+
         getTodaysMedicines();
         setRecyclerView();
     }
@@ -34,9 +37,10 @@ public class PatientTodaySchedule extends AppCompatActivity {
         // code to get today's medicines
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
+        int uid = Integer.parseInt(session.getUserId());
         sqLiteHelper = new SQLiteHelper(getApplicationContext(),"UserDB.sqlite",null,1);
         Log.i("get Todays Meds","Day: "+day);
-        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day+" ORDER BY hour,minute";
+        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day+" AND patientID ="+uid+" ORDER BY hour,minute";
         Cursor c = sqLiteHelper.getData(sql);
         Log.i("resultforcursor","executed" + c.getCount());
         if(c.moveToFirst())

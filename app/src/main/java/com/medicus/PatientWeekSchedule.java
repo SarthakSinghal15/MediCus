@@ -22,16 +22,19 @@ public class PatientWeekSchedule extends AppCompatActivity implements AdapterVie
     private ArrayList<String> medNames,medTimes;
     RecyclerView recyclerView;
     public static SQLiteHelper sqLiteHelper;
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_week_schedule);
 
+        session = new UserSessionManager(getApplicationContext());
         dayofweek = (Spinner) findViewById(R.id.spn_dayofweek);
 
         // Spinner click listener
         dayofweek.setOnItemSelectedListener(this);
+
 
         // Spinner Drop down elements
         List<String> weekdays = new ArrayList<String>();
@@ -82,9 +85,10 @@ public class PatientWeekSchedule extends AppCompatActivity implements AdapterVie
         medNames.clear();
         medTimes.clear();
         //Calendar calendar = Calendar.getInstance();
+        int uid = Integer.parseInt(session.getUserId());
         sqLiteHelper = new SQLiteHelper(getApplicationContext(),"UserDB.sqlite",null,1);
         Log.i("resultforcursor","executed     :    "+day);
-        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day+" ORDER BY hour,minute";
+        String sql = "SELECT medname,hour,minute FROM PRESCRIPTION WHERE day ="+day+" AND patientID ="+uid+" ORDER BY hour,minute";
         Cursor c = sqLiteHelper.getData(sql);
         Log.i("resultforcursor","executed" + c.getCount());
         if(c.moveToFirst())
