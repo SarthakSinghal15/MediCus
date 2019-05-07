@@ -44,7 +44,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
     FirebaseFirestore db;
     ProgressDialog progressDialog;
 
-    Button todaySchedule, weekSchedule, emergencyCall, syncPrescriptions;
+    Button todaySchedule, weekSchedule, hrmonitor, syncPrescriptions;
     TextView pid, pname, paddr, pemergency;
 
     String name,medicine;
@@ -63,7 +63,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
         todaySchedule = (Button) findViewById(R.id.btn_todaySchedule);
         weekSchedule = (Button) findViewById(R.id.btn_weekSchedule);
-        emergencyCall = (Button) findViewById(R.id.btn_emergencyCall);
+        hrmonitor = (Button) findViewById(R.id.btn_hrmonitor);
         syncPrescriptions = (Button) findViewById(R.id.btn_syncmeds);
 
         pid = (TextView) findViewById(R.id.txt_patientId);
@@ -96,12 +96,14 @@ public class PatientDashboardActivity extends AppCompatActivity {
             }
         });
 
-        emergencyCall.setOnClickListener(new View.OnClickListener() {
+        hrmonitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // code to call emergency contact
                 //setAlarm(1234,"Ajinkya Thakare","Paracetamol",0,38,4);
                 //clearAlarm(1234);
+                Intent intent = new Intent(getApplicationContext(),PatientHearRateMonitorActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -249,29 +251,12 @@ public class PatientDashboardActivity extends AppCompatActivity {
         // fetch all prescs from firestore for current user id and load into local db
         firestoreToLocal();
 
-        // load local db with new prescs data
+
 //
-//        int uid = Integer.parseInt(session.getUserId());
-//        sqLiteHelper.insertPrescriptionData(uid,001,5,"3",6,8,"Crocine");
-//        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,5,"Paracetamol");
-//        sqLiteHelper.insertPrescriptionData(uid,001,4,"3",5,3,"B-Capsule");
-//        sqLiteHelper.insertPrescriptionData(uid,001,6,"3",5,50,"Combiflame");
-//        sqLiteHelper.insertPrescriptionData(uid,001,3,"3",5,5,"Oncet-CF");
-//        sqLiteHelper.insertPrescriptionData(uid,001,1,"3",5,7,"Crocine");
 
         Log.i("Alarm ","Reached below firestore to local");
 //
-//        // set new alarms with new prescs data
-//        String userName = session.getUserName();
-//        String sql = "SELECT presId,medname,hour,minute,day FROM PRESCRIPTION";
-//        Cursor c = sqLiteHelper.getData(sql);
-//        if (c.moveToFirst()) {
-//            do {
-//                Log.i("to Set Alarm", "Setting Alarm");
-//                setAlarm(c.getInt(0), userName, c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4));
-//            }
-//            while (c.moveToNext());
-//        }
+//
 
     }
 
@@ -298,6 +283,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
                         Log.i("Alarm Firestre to loc","uid: "+uid+" med: "+medname+" day: "+day+" hour: "+hour+" min: "+minute);
 
+                        // load local db with new prescs data
                         sqLiteHelper.insertPrescriptionData(uid,docid,day,duration,hour,minute,medname);
                         new Handler().postDelayed(
                                 new Runnable() {
@@ -316,6 +302,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
     private void localtoSetAlarm()
     {
+        // set new alarms with new prescs data
         String userName = session.getUserName();
         String sql = "SELECT presId,medname,hour,minute,day FROM PRESCRIPTION";
         Cursor c = sqLiteHelper.getData(sql);

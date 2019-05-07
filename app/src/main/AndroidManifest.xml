@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.medicus">
 
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".App"
@@ -11,24 +11,28 @@
         android:icon="@drawable/medicuslogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.Dark">
-        <activity android:name=".DoctorViewPatient"/>
-        <activity android:name=".PatientWeekSchedule"/>
-        <activity android:name=".PatientTodaySchedule"/>
-        <activity android:name=".PatientDashboardActivity"/>
-        <activity android:name=".DoctorDashboardActivity"/>
-        <activity android:name=".DoctorAddPatientActivity"/>
-        <activity android:name=".DoctorAddPrescriptionActivity"/>
-        <activity android:name=".DoctorSignupActivity"/>
-        <activity android:name=".DoctorLoginActivity"/>
-        <activity android:name=".SignupActivity"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".PatientHearRateMonitorActivity"></activity>
+        <activity android:name=".DoctorViewPatient" />
+        <activity android:name=".PatientWeekSchedule" />
+        <activity android:name=".PatientTodaySchedule" />
+        <activity android:name=".PatientDashboardActivity" />
+        <activity android:name=".DoctorDashboardActivity" />
+        <activity android:name=".DoctorAddPatientActivity" />
+        <activity android:name=".DoctorAddPrescriptionActivity" />
+        <activity android:name=".DoctorSignupActivity" />
+        <activity android:name=".DoctorLoginActivity" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MyAlarm"
+
+        <receiver
+            android:name=".MyAlarm"
             android:enabled="true" />
     </application>
 

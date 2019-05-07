@@ -128,10 +128,10 @@
             android:elevation="10dp"/>
 
         <Button
-            android:id="@+id/btn_emergencyCall"
+            android:id="@+id/btn_hrmonitor"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="Emergency Call"
+            android:text="Heart-Rate Monitor"
             android:elevation="10dp"/>
 
         <Button

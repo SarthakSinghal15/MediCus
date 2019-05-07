@@ -7,10 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -21,15 +17,10 @@ import static com.medicus.App.channel_id;
 
 
 public class MyAlarm extends BroadcastReceiver {
-
-    private MediaPlayer mediaPlayer;
     private NotificationManagerCompat notificationManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        //mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
-        //mediaPlayer.start();
 
         sendNotification(context,intent);
 
@@ -114,14 +105,11 @@ public class MyAlarm extends BroadcastReceiver {
         String name = intent.getStringExtra("name");
         String medicine = intent.getStringExtra("medicine");
         int reqno = intent.getIntExtra("reqno",0);
-        int hour = intent.getIntExtra("hour",0);
-        int minute = intent.getIntExtra("minute",0);
 
 
         notificationManager = NotificationManagerCompat.from(context);
 
         Intent activityIntent = new Intent(context,MainActivity.class);
-        //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentIntent = PendingIntent.getActivity(context,reqno,activityIntent,0);
 
         Log.i("Alarm Ring", "Name: "+ name + ", Medicine: "+ medicine + ", Request No.: "+ reqno);
@@ -155,7 +143,6 @@ public class MyAlarm extends BroadcastReceiver {
         notificationManager = NotificationManagerCompat.from(context);
 
         Intent activityIntent = new Intent(context,MainActivity.class);
-        //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentIntent = PendingIntent.getActivity(context,reqno,activityIntent,0);
 
         Log.i("Alarm Ring Missed", "Name: "+ name + ", Medicine: "+ medicine + ", Request No.: "+ reqno);

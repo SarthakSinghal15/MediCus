@@ -24,6 +24,8 @@ public class UserSessionManager
     public static final String U_EMAIL = "email";
     public static final String U_ECONTACT = "emergency";
     public static final String U_TYPE = "type";
+    public static final String U_HRMONITOR = "hrmonitor";
+    public static final String U_HRECALL = "hrecall";
 
     public UserSessionManager(Context context)
     {
@@ -42,6 +44,8 @@ public class UserSessionManager
         editor.putString(U_ECONTACT,emergency);
         editor.putString(U_TYPE,type);
         editor.putString(U_EMAIL,email);
+        editor.putBoolean(U_HRMONITOR,false);
+        editor.putBoolean(U_HRECALL,false);
         editor.commit();
     }
 
@@ -77,7 +81,6 @@ public class UserSessionManager
         user.put(U_ECONTACT,pref.getString(U_ECONTACT,null));
         user.put(U_TYPE,pref.getString(U_TYPE,null));
         user.put(U_EMAIL,pref.getString(U_EMAIL,null));
-        userid = Integer.parseInt(pref.getString(U_ID,null));
         return user;
     }
 
@@ -91,6 +94,14 @@ public class UserSessionManager
     public String getUserName() {return pref.getString(U_NAME,null);}
 
     public String getEmergency() {return pref.getString(U_ECONTACT,null);}
+
+    public boolean getHRMonitorStatus() {return pref.getBoolean(U_HRMONITOR,false);}
+
+    public void setHRMonitorStatus(boolean flag){editor.putBoolean(U_HRMONITOR,flag); editor.commit();}
+
+    public boolean getHRECallStatus() {return  pref.getBoolean(U_HRECALL,false);}
+
+    public void setHRECallStatus(boolean flag) {editor.putBoolean(U_HRECALL,flag); editor.commit();}
 
     public void logoutUser()
     {

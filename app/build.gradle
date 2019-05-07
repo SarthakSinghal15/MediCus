@@ -20,6 +20,8 @@ android {
     }
 }
 
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -31,5 +33,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-firestore:16.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.google.android.gms:play-services-fitness:16.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+
 
 }
