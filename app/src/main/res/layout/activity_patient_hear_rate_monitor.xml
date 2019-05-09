@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_newbpm"
-                    android:text="78"
+                    android:text="0"
                     android:textSize="100dp"
                     />
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_avgbpm"
-                    android:text="75"
+                    android:text="0"
                     android:textSize="100dp"
                     />
                 <TextView
@@ -100,6 +100,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_hrhistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Heart-Rate Data"/>

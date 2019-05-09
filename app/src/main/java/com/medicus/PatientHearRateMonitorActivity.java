@@ -12,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,9 +35,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static java.text.DateFormat.getTimeInstance;
@@ -43,11 +47,13 @@ import static java.text.DateFormat.getTimeInstance;
 public class PatientHearRateMonitorActivity extends AppCompatActivity {
 
     Switch hr_switch, hr_emercall;
+    TextView txt_newbpm, txt_avgbpm;
+    Button btn_hrhistory;
     UserSessionManager session;
     public static final int GOOGLE_FIT_PERMISSIONS_REQUEST_CODE =1234;
     public static final int HEART_RATE_MONITOR_REQUEST_CODE = 2222;
-    List<Integer> heartRateBPM;
-    List<String> heartRateTime;
+    ArrayList<Integer> heartRateBPM;
+    ArrayList<String> heartRateTime;
     HeartRateMonitor hrmonitor;
 
 
@@ -58,14 +64,22 @@ public class PatientHearRateMonitorActivity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext());
         hrmonitor = new HeartRateMonitor();
 
+        heartRateBPM = new ArrayList<>();
+        heartRateTime = new ArrayList<>();
+
         hr_switch = findViewById(R.id.hr_switch);
         hr_emercall = findViewById(R.id.hr_emercall);
+        txt_newbpm = findViewById(R.id.txt_newbpm);
+        txt_avgbpm = findViewById(R.id.txt_avgbpm);
+        btn_hrhistory = findViewById(R.id.btn_hrhistory);
 
         boolean hrstatus = session.getHRMonitorStatus();
         boolean hrecall = session.getHRECallStatus();
         changeComponentAccess(hrstatus);
         hr_switch.setChecked(hrstatus);
         hr_emercall.setChecked(hrecall);
+
+        setScreenContents();
 
         hr_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,14 +92,16 @@ public class PatientHearRateMonitorActivity extends AppCompatActivity {
                     getGoogleFitPermission();
                     //addGoogleFitData();
                     //accessGoogleFit();
-                    setHeartRateMonitor();
+                    //setHeartRateMonitor();
+                    runHeartRateMonitor();
                 }
                 else
                 {
                     session.setHRMonitorStatus(false);
                     changeComponentAccess(false);
                     hr_emercall.setChecked(false);
-                    cancelHeartRateMonitor();
+                    //cancelHeartRateMonitor();
+                    stopHeartRateMonitor();
                 }
             }
         });
@@ -101,6 +117,82 @@ public class PatientHearRateMonitorActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btn_hrhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(),PatientHeartRateHistoryActivity.class);
+                intent.putExtra("bpmList",heartRateBPM);
+                intent.putExtra("bpmTime",heartRateTime);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setScreenContents()
+    {
+        if(session.getHRMonitorStatus())
+        {
+            txt_newbpm.setText(78 + "");
+            txt_avgbpm.setText(79 + "");
+        }
+    }
+
+    private void runHeartRateMonitor()
+    {
+
+            final Thread thread = new Thread() {
+                public void run() {
+                    try {
+                        while(session.getHRMonitorStatus()) {
+                            Thread.sleep(5000);
+                            Random r = new Random();
+                            final int heartbpm = r.nextInt(82 - 77) + 77;
+                            String currentDateTime = DateFormat.getDateTimeInstance().format(new Date());
+                            if (heartRateBPM.size() == 10) {
+                                heartRateBPM.remove(0);
+                                heartRateTime.remove(0);
+                            }
+
+                            heartRateBPM.add(heartbpm);
+                            heartRateTime.add(currentDateTime);
+
+
+                            int bpmSum = 0;
+                            for (int bpm : heartRateBPM) {
+                                bpmSum += bpm;
+                            }
+
+                            final int bpmAvg = bpmSum / heartRateBPM.size();
+
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txt_newbpm.setText(heartbpm + "");
+                                    txt_avgbpm.setText(bpmAvg + "");
+                                }
+                            });
+
+                            Log.i("hrmonitor", "new: " + heartbpm + " ; avg: " + bpmAvg);
+
+                        }
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+
+                }
+            };
+
+            thread.start();
+
+    }
+
+    private void stopHeartRateMonitor()
+    {
+        txt_newbpm.setText(0+ "");
+        txt_avgbpm.setText(0 + "");
     }
 
     private void setHeartRateMonitor()

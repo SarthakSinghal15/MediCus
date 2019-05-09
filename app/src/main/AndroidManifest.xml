@@ -11,7 +11,8 @@
         android:icon="@drawable/medicuslogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.Dark">
-        <activity android:name=".PatientHearRateMonitorActivity"></activity>
+        <activity android:name=".PatientHeartRateHistoryActivity"></activity>
+        <activity android:name=".PatientHearRateMonitorActivity" />
         <activity android:name=".DoctorViewPatient" />
         <activity android:name=".PatientWeekSchedule" />
         <activity android:name=".PatientTodaySchedule" />
